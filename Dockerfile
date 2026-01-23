@@ -3,7 +3,8 @@ FROM node:25-slim AS node
 RUN npm install -g @angular/cli
 
 WORKDIR /app
-COPY package.json package-lock.json ./
+#COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install
 COPY . .
 RUN npm run build --prod
