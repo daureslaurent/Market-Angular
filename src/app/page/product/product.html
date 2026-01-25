@@ -1,1 +1,14 @@
+<p> current page {{ page() }} -- current size {{ size() }} -- total pages {{ totalPage() }}</p>
+
+
+@for (product of products(); track product.id) {
+  <app-product-viewer
+    [product] = product
+  ></app-product-viewer>
+} @empty {
+  <p>No product.</p>
+}
+
+<button matButton (click)="prevPage()" >Prev</button>
+<button matButton (click)="nextPage()" >Next</button>
 
