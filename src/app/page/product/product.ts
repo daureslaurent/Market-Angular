@@ -39,7 +39,6 @@ export class Product {
   );
 
   protected readonly products = computed(() => this.pageResult()?.content ?? [])
-  protected readonly totalPage = computed(() => this.pageResult()?.totalPages ?? 0)
   protected readonly totalElements = computed(() => this.pageResult()?.totalElements ?? 0)
 
   handlePageEvent(e: PageEvent) {

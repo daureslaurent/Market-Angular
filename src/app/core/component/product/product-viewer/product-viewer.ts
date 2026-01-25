@@ -1,12 +1,30 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {ProductModel} from '../../../api/product/model/product.model';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader, MatCardImage,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-viewer',
-  imports: [],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardContent,
+    MatCardActions,
+    MatButton,
+    MatCardImage,
+  ],
   templateUrl: './product-viewer.html',
   styleUrl: './product-viewer.css',
 })
 export class ProductViewer {
-  @Input({ required: true }) product!: ProductModel;
+  readonly product = input.required<ProductModel>()
 }

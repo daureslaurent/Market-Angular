@@ -1,0 +1,15 @@
+.product-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e5e5e5
+}
+
+.container-grid {
+  padding: 24px;
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
