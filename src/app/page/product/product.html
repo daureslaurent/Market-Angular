@@ -1,5 +1,10 @@
-<p> current page {{ page() }} -- current size {{ size() }} -- total pages {{ totalPage() }}</p>
-
+<div class="paginator-container">
+  <mat-paginator [length]="totalElements()"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageEvent($event)"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>
 
 @for (product of products(); track product.id) {
   <app-product-viewer
@@ -8,7 +13,3 @@
 } @empty {
   <p>No product.</p>
 }
-
-<button matButton (click)="prevPage()" >Prev</button>
-<button matButton (click)="nextPage()" >Next</button>
-

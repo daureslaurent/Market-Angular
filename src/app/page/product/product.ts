@@ -1,15 +1,15 @@
 import {Component, computed, inject, signal} from '@angular/core';
 import {ProductApi} from '../../core/api/product/product-api';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {MatButton} from '@angular/material/button';
 import {switchMap} from 'rxjs';
 import {ProductViewer} from '../../core/component/product/product-viewer/product-viewer';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product',
   imports: [
-    MatButton,
-    ProductViewer
+    ProductViewer,
+    MatPaginatorModule
   ],
   templateUrl: './product.html',
   styleUrl: './product.css',
@@ -40,13 +40,12 @@ export class Product {
 
   protected readonly products = computed(() => this.pageResult()?.content ?? [])
   protected readonly totalPage = computed(() => this.pageResult()?.totalPages ?? 0)
+  protected readonly totalElements = computed(() => this.pageResult()?.totalElements ?? 0)
 
-  nextPage() {
-    this.page.update(p => Math.min(Math.max(0, this.totalPage() - 1), p + 1))
+  handlePageEvent(e: PageEvent) {
+    this.page.update(() => e.pageIndex)
+    this.size.update(() => e.pageSize)
   }
 
-  prevPage() {
-    this.page.update(p => Math.max(0, p - 1))
-  }
 
 }
