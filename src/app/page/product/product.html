@@ -1,6 +1,7 @@
 <mat-drawer-container class="side-navbar">
   <mat-drawer mode="side" opened>
     <h3>Filter content</h3>
+    <app-product-filter></app-product-filter>
   </mat-drawer>
   <mat-drawer-content>
     <mat-paginator [length]="totalElements()"
@@ -9,7 +10,7 @@
                    aria-label="Select page">
     </mat-paginator>
 
-    <div class="container-grid responsive-grid">
+    <div class="container-grid responsive-grid left-margin-removed">
       @for (product of products(); track product.id) {
         <app-product-viewer
           class="product-card"
@@ -21,7 +22,3 @@
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
-
-<app-product-filter></app-product-filter>
-

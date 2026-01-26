@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
@@ -9,5 +9,4 @@ import {MatExpansionModule} from '@angular/material/expansion';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFilter {
-  readonly panelOpenState = signal(false);
 }

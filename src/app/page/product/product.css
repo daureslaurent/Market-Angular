@@ -14,6 +14,10 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
+.left-margin-removed {
+  margin-left: -24px;
+}
+
 .side-navbar {
   width: auto;
   /*height: 200px;*/
