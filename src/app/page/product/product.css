@@ -13,3 +13,22 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
+
+.side-navbar {
+  width: auto;
+  /*height: 200px;*/
+  /*margin: 10px;*/
+  /*border: 1px solid #555;*/
+  /*/* The background property is added to clearly distinguish the borders between drawer and main*/
+  /*   content */
+  /*background: #eee;*/
+}
+
+/* Complete main page ! */
+/*.side-navbar {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  bottom: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*}*/

@@ -1,25 +1,10 @@
 import {Component, input} from '@angular/core';
 import {ProductModel} from '../../../api/product/model/product.model';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader, MatCardImage,
-  MatCardSubtitle,
-  MatCardTitle
-} from '@angular/material/card';
-import {MatButton} from '@angular/material/button';
+import {MatCardImage} from '@angular/material/card';
 
 @Component({
   selector: 'app-product-viewer',
   imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatCardContent,
-    MatCardActions,
-    MatButton,
     MatCardImage,
   ],
   templateUrl: './product-viewer.html',

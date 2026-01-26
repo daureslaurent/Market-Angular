@@ -4,12 +4,18 @@ import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {switchMap} from 'rxjs';
 import {ProductViewer} from '../../core/component/product/product-viewer/product-viewer';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {ProductFilter} from '../../core/component/product-filter/product-filter';
+import {MatDrawer, MatDrawerContainer, MatDrawerContent} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-product',
   imports: [
     ProductViewer,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ProductFilter,
+    MatDrawerContainer,
+    MatDrawer,
+    MatDrawerContent
   ],
   templateUrl: './product.html',
   styleUrl: './product.css',

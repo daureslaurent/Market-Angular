@@ -1,16 +1,27 @@
-<mat-paginator [length]="totalElements()"
-               [pageSizeOptions]="[5, 10, 25, 100]"
-               (page)="handlePageEvent($event)"
-               aria-label="Select page">
-</mat-paginator>
+<mat-drawer-container class="side-navbar">
+  <mat-drawer mode="side" opened>
+    <h3>Filter content</h3>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-paginator [length]="totalElements()"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   (page)="handlePageEvent($event)"
+                   aria-label="Select page">
+    </mat-paginator>
 
-<div class="container-grid responsive-grid">
-  @for (product of products(); track product.id) {
-    <app-product-viewer
-      class="product-card"
-      [product] = product
-    ></app-product-viewer>
-  } @empty {
-    <p>No product.</p>
-  }
-</div>
+    <div class="container-grid responsive-grid">
+      @for (product of products(); track product.id) {
+        <app-product-viewer
+          class="product-card"
+          [product] = product
+        ></app-product-viewer>
+      } @empty {
+        <p>No product.</p>
+      }
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<app-product-filter></app-product-filter>
+
