@@ -4,12 +4,7 @@ on:
     types: [ helm ]
 
 env:
-  TEMPLATE_REPO_URL: https://github.com/your-org/infra-services.git  # replace with your GitHub repo
   HELM_REPO_URL: https://helm.lda-dev.com
-  NAME_APP: orc-store-app
-  NAME_CHART: orc-store-app
-  TEMPLATE: your-template-folder # folder in repoA to copy
-
 
 jobs:
   build:
@@ -22,8 +17,10 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout this repo (repoB)
+      - name: Checkout this repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.branch || 'develop' }}
 
       - name: Set up Git
         run: |
@@ -40,10 +37,15 @@ jobs:
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
           helm plugin install https://github.com/chartmuseum/helm-push.git
 
+      - name: List chart directory
+        run: ls -R chart
+
       - name: Replace image repository and tag
         run: |
-          sed -i "s|APP_IMAGE_DOCKER_REPOSITORY|${{ github.event.image }}|g" chart/values.yaml
-          sed -i "s|APP_IMAGE_DOCKER_TAG|${{ github.event.tag }}|g" chart/values.yaml
+          ls .
+          ls chart/
+          sed -i "s|APP_IMAGE_DOCKER_REPOSITORY|${{ github.event.client_payload.image }}|g" chart/values.yaml
+          sed -i "s|APP_IMAGE_DOCKER_TAG|${{ github.event.client_payload.tag }}|g" chart/values.yaml
 
       - name: Clone template repo
         run: |
@@ -56,7 +58,7 @@ jobs:
 
       - name: Replace placeholders
         run: |
-          find chart/templates/ -type f -exec sed -i "s/template-holder/${{ github.event.name }}/g" {} +
+          find chart/templates/ -type f -exec sed -i "s/template-holder/${{ github.event.client_payload.name }}/g" {} +
 
       - name: Remove old files
         run: |

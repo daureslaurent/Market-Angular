@@ -44,6 +44,7 @@ jobs:
             -d '{
               "event_type": "helm",
               "client_payload": {
+                "branch": "'"${{ github.ref  }}"'",
                 "name": "'"${{ env.APP_NAME  }}"'",
                 "image": "'"${{ env.IMAGE_NAME  }}"'",
                 "tag": "'"${{ env.SHORT_SHA }}"'"
