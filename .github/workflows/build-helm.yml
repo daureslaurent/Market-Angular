@@ -4,7 +4,7 @@ on:
     types: [ helm ]
 
 env:
-  HELM_REPO_URL: https://helm.lda-dev.com/api/charts
+  HELM_REPO_URL: https://helm.lda-dev.com
 
 jobs:
   build:
