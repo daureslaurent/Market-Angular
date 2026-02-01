@@ -67,13 +67,16 @@ jobs:
           helm package ./chart
           ls .
 
-      - name: Push Helm chart
-        env:
-          HELM_REPO_USERNAME: ${{ secrets.HELM_REPO_USERNAME }}
-          HELM_REPO_PASSWORD: ${{ secrets.HELM_REPO_PASSWORD }}
-        run: |
-          helm cm-push ./*.tgz "$HELM_REPO_URL" --username "$HELM_REPO_USERNAME" --password "$HELM_REPO_PASSWORD" --force
+#      - name: Push Helm chart
+#        env:
+#          HELM_REPO_USERNAME: ${{ secrets.HELM_REPO_USERNAME }}
+#          HELM_REPO_PASSWORD: ${{ secrets.HELM_REPO_PASSWORD }}
+#        run: |
+#          helm cm-push ./*.tgz "$HELM_REPO_URL" --username "$HELM_REPO_USERNAME" --password "$HELM_REPO_PASSWORD" --force
 
+      - name: Push Helm chart
+        run: |
+          helm cm-push ./*.tgz "$HELM_REPO_URL" --force
 
       - name: Trigger infra update
         run: |
