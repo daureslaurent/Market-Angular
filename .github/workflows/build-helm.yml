@@ -37,9 +37,6 @@ jobs:
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
           helm plugin install https://github.com/chartmuseum/helm-push.git
 
-      - name: List chart directory
-        run: ls -R chart
-
       - name: Replace image repository and tag
         run: |
           ls .
@@ -50,6 +47,15 @@ jobs:
       - name: Clone template repo
         run: |
           git clone https://github.com/daureslaurent/Market-Infra.git helm_template
+
+      - name: List helm_template
+        run: ls -R helm_template
+
+      - name: List helm_template/helm
+        run: ls -R helm_template/helm
+
+      - name: List helm_template/helm/templates
+        run: ls -R helm_template/helm/templates
 
       - name: Copy templates
         run: |
