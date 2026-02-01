@@ -1,0 +1,93 @@
+name: Build and push Helm
+on:
+  repository_dispatch:
+    types: [ helm ]
+
+env:
+  TEMPLATE_REPO_URL: https://github.com/your-org/infra-services.git  # replace with your GitHub repo
+  HELM_REPO_URL: https://helm.lda-dev.com
+  NAME_APP: orc-store-app
+  NAME_CHART: orc-store-app
+  TEMPLATE: your-template-folder # folder in repoA to copy
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout this repo (repoB)
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git curl
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm plugin install https://github.com/chartmuseum/helm-push.git
+
+      - name: Replace image repository and tag
+        run: |
+          sed -i "s|APP_IMAGE_DOCKER_REPOSITORY|${{ github.event.image }}|g" chart/values.yaml
+          sed -i "s|APP_IMAGE_DOCKER_TAG|${{ github.event.tag }}|g" chart/values.yaml
+
+      - name: Clone template repo
+        run: |
+          git clone https://github.com/daureslaurent/Market-Infra.git helm_template
+
+      - name: Copy templates
+        run: |
+          mkdir -p chart/templates/
+          cp -r helm_template/helm/templates/* chart/templates/
+
+      - name: Replace placeholders
+        run: |
+          find chart/templates/ -type f -exec sed -i "s/template-holder/${{ github.event.name }}/g" {} +
+
+      - name: Remove old files
+        run: |
+          find ./chart/templates -type f -name '*.old' -delete
+
+      - name: Lint and package Helm chart
+        run: |
+          ls ./chart
+          ls ./chart/templates
+          helm lint ./chart
+          helm package ./chart
+          ls .
+
+      - name: Push Helm chart
+        env:
+          HELM_REPO_USERNAME: ${{ secrets.HELM_REPO_USERNAME }}
+          HELM_REPO_PASSWORD: ${{ secrets.HELM_REPO_PASSWORD }}
+        run: |
+          helm cm-push ./*.tgz "$HELM_REPO_URL" --username "$HELM_REPO_USERNAME" --password "$HELM_REPO_PASSWORD" --force
+
+
+      - name: Trigger infra update
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.INFRA_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/daureslaurent/Market-Infra/dispatches \
+            -d '{
+              "event_type": "helm-deploy",
+              "client_payload": {
+                "image": "'"${{ env.IMAGE_NAME  }}"'",
+                "tag": "'"${{ env.SHORT_SHA }}"'"
+              }
+            }'
