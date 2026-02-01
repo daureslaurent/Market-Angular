@@ -39,8 +39,6 @@ jobs:
 
       - name: Replace image repository and tag
         run: |
-          ls .
-          ls chart/
           sed -i "s|APP_IMAGE_DOCKER_REPOSITORY|${{ github.event.client_payload.image }}|g" chart/values.yaml
           sed -i "s|APP_IMAGE_DOCKER_TAG|${{ github.event.client_payload.tag }}|g" chart/values.yaml
 

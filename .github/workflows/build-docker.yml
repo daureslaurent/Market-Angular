@@ -19,10 +19,13 @@ jobs:
 
       - name: Set image name
         run: |
-          APP_NAME=${{ github.repository }}
-          echo "APP_NAME=${APP_NAME,,}" >> $GITHUB_ENV
           IMAGE_NAME=ghcr.io/${{ github.repository }}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> $GITHUB_ENV
+
+      - name: Set APP_NAME
+        run: |
+          APP_NAME="${GITHUB_REPOSITORY##*/}"
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
 
       - name: Set short SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
