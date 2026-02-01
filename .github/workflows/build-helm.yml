@@ -81,7 +81,6 @@ jobs:
             -d '{
               "event_type": "helm-deploy",
               "client_payload": {
-                "image": "'"${{ env.IMAGE_NAME  }}"'",
-                "tag": "'"${{ env.SHORT_SHA }}"'"
+                "helm_name": "'"${{ github.event.client_payload.name }}"'"
               }
             }'
