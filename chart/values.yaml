@@ -21,7 +21,7 @@ image:
   probeContext: "/"
 
 imagePullSecrets:
-  - name: lda-docker-registry
+#  - name: lda-docker-registry
 nameOverride: ""
 fullnameOverride: ""
 
@@ -50,27 +50,18 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
-  portContainer: 8080
+  portContainer: 80
 
 ingress:
-  enabled: false
-#  className: ""
-#  annotations:
-#     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-#    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-#    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-#    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-#      kubernetes.io/ingress.class: nginx
-#      kubernetes.io/tls-acme: "true"
-#   hosts:
-#     - host: game-socket.lda-dev.com
-#       paths:
-#         - path: /
-#           pathType: ImplementationSpecific
-#   tls: []
-#     - secretName: chart-example-tls
-#       hosts:
-#         - chart-example.local
+  enabled: true
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls.certresolver: ovh
+  hosts:
+    - host: market.lda-dev.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
