@@ -4,7 +4,7 @@ on:
     types: [ helm ]
 
 env:
-  HELM_REPO_URL: https://helm.lda-dev.com
+  HELM_REPO_URL: https://helm.lda-dev.com/api/charts
 
 jobs:
   build:
@@ -61,11 +61,8 @@ jobs:
 
       - name: Lint and package Helm chart
         run: |
-          ls ./chart
-          ls ./chart/templates
           helm lint ./chart
           helm package ./chart
-          ls .
 
 #      - name: Push Helm chart
 #        env:
