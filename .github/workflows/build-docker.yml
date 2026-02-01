@@ -25,7 +25,7 @@ jobs:
       - name: Set APP_NAME
         run: |
           APP_NAME="${GITHUB_REPOSITORY##*/}"
-          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+          echo "APP_NAME=${APP_NAME,,}" >> $GITHUB_ENV
 
       - name: Set short SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV

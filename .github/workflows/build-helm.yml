@@ -81,6 +81,6 @@ jobs:
             -d '{
               "event_type": "helm-deploy",
               "client_payload": {
-                "helm_name": "'"${{ github.event.client_payload.name }}"'"
+                "helm_name": "'${{ github.event.client_payload.name }}'"
               }
             }'
