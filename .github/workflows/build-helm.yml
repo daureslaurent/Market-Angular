@@ -48,15 +48,6 @@ jobs:
         run: |
           git clone https://github.com/daureslaurent/Market-Infra.git helm_template
 
-      - name: List helm_template
-        run: ls -R helm_template
-
-      - name: List helm_template/helm
-        run: ls -R helm_template/helm
-
-      - name: List helm_template/helm/templates
-        run: ls -R helm_template/helm/templates
-
       - name: Copy templates
         run: |
           mkdir -p chart/templates/
