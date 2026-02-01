@@ -1,4 +1,4 @@
-name: build.yml
+name: Build Push Docker
 on:
   push:
     branches: [ "develop" ]
